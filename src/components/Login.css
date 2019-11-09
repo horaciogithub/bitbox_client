@@ -1,0 +1,11 @@
+div.form-container {
+    margin: auto;
+    margin-top: 50px;;
+    width: 20%;
+    box-shadow: 0 0 5px lightgray;
+}
+
+div.form-container button {
+    display: block;
+    margin: auto
+}
