@@ -3,6 +3,8 @@ import { Redirect } from "react-router-dom";
 
 import axios from "axios";
 
+import './Login.css';
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -30,9 +32,9 @@ export default class Login extends Component {
       .then(res => {
         if (res.status === 200) {
           axios
-            .post(`http://localhost:8180/user/data`, {  email: username  })
+            .post(`http://localhost:8180/user/data`, {  name: username  })
             .then(res => {
-              console.log(res.data)
+              sessionStorage.setItem("userData", JSON.stringify(res.data)); // User session data
               this.setState({
                 isAuthenticated: true
               })
@@ -54,14 +56,16 @@ export default class Login extends Component {
     }
 
     return (
-      <div>
-        Username
-        <input type="text" name="username" onChange={this.inputHandler} />
-        <br />
-        Password
-        <input type="password" name="password" onChange={this.inputHandler} />
-        <br />
-        <button onClick={this.formHandler}>Logearse</button>
+      <div className="form-container">
+        <div className="form-group">
+          <div className="user-addon"></div>
+          <input className="user-input" type="text" name="username" onChange={this.inputHandler} />
+        </div>
+        <div className="form-group">
+          <div className="password-addon"></div>
+          <input className="password-input" type="password" name="password" onChange={this.inputHandler} />
+        </div>
+        <button className="btn" onClick={this.formHandler}>Logearse</button>
       </div>
     );
   }

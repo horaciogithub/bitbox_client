@@ -1,12 +1,16 @@
-.td-bordeless {
-    /* border: none !important; */
-    background-color: white !important;
+#table .state-container {
+    width: 70%;
+    height: 24px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
-td, th {
-    text-align: center !important;
-}
-
-th {
-    text-transform: uppercase;
+#table .state-container button {
+    width: 20px;
+    height: 20px;
+    background: url('../assets/icons/filter.png') no-repeat;
+    background-size: cover;
+    border: none;
 }
