@@ -1,0 +1,45 @@
+#table {
+    height: 500px;
+    margin-top: 50px;
+    padding: 0;
+    overflow-y: scroll;
+    background-color: rgb(35, 37, 46);
+    box-shadow: 0 0 5px black;
+}
+
+#table::-webkit-scrollbar {
+    width: 10px;
+}
+
+#table::-webkit-scrollbar-thumb {
+    background: #303f9f; 
+}
+
+#table .state-container {
+    width: 70%;
+    height: 24px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#table .state-edit button {
+   margin-left: 10px;
+}
+
+#table .state-container button {
+    width: 20px;
+    height: 20px;
+    background: url('../../assets/icons/filter.png') no-repeat;
+    background-size: cover;
+    border: none;
+}
+
+#table .new-item {
+    background-color: rgb(36, 35, 35);
+}
+
+.btn-edit {
+    margin-left: 5px;
+}

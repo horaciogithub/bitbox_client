@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import axios from "axios";
 
-import './Login.css';
+import './LoginComponent.css';
 
 export default class Login extends Component {
   constructor(props) {
@@ -59,7 +59,7 @@ export default class Login extends Component {
       <div className="form-container">
         <div className="form-group">
           <div className="user-addon"></div>
-          <input className="user-input" type="text" name="username" onChange={this.inputHandler} />
+          <input className="user-input" type="text" name="username" autocomplete="off" onChange={this.inputHandler} />
         </div>
         <div className="form-group">
           <div className="password-addon"></div>

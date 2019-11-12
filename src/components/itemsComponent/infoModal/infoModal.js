@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 export default class InfoModal extends Component {
   render() {
+    let i = 1; // Suppliers second id map
+    console.log(this.props.data)
     return this.props.data.map(item => (
       <div
         key={"k1 - " + item.itemCode}
@@ -29,8 +31,8 @@ export default class InfoModal extends Component {
             </div>
             <div className="modal-body">
               {item.suppliers.map(supplier =>
-                supplier.length > 0 ? (
-                  <div key={this.props.counter++}>
+                supplier.id !== null ? (
+                  <div key={ i++ }>
                     <p>Supplier name: {supplier.name}</p>
                     <p>Supplier country: {supplier.country}</p>
                     <hr />
@@ -56,9 +58,6 @@ export default class InfoModal extends Component {
                 data-dismiss="modal"
               >
                 Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
               </button>
             </div>
           </div>

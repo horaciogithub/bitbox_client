@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import Login from "../components/Login";
-import Items from "../components/ItemsComponent";
+import Login from "../components/loginComponent/LoginComponent";
+import Items from "../components/itemsComponent/ItemsComponent";
 
 export default class App extends Component {
 

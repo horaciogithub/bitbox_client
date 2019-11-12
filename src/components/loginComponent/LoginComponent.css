@@ -1,9 +1,15 @@
+
 div.form-container {
+    position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 25%;
+    height: 235px;
     margin: auto;
-    margin-top: 50px;;
-    width: 20%;
-    box-shadow: 0 0 5px black;
     padding: 20px;
+    box-shadow: 0 0 5px rgb(32, 32, 32);
 }
 
 div.form-container button {
@@ -24,7 +30,7 @@ div.form-container .user-addon {
     height: 25px;
     margin: auto;
     margin: 8px;
-    background: url('../assets/icons/user.png') no-repeat;
+    background: url('../../assets/icons/user.png') no-repeat;
     background-size: cover;
 }
 
@@ -41,7 +47,7 @@ div.form-container .password-addon {
     height: 25px;
     margin: auto;
     margin: 8px;
-    background: url('../assets/icons/lock.png') no-repeat;
+    background: url('../../assets/icons/lock.png') no-repeat;
     background-size: cover;
 }
 

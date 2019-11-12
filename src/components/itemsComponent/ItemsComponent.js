@@ -3,12 +3,13 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faEye } from "@fortawesome/free-solid-svg-icons";
 
 import "./ItemsComponent.css";
 
 import InfoModal from "./infoModal/infoModal";
 import EditModal from "./editModal/EditModal";
+import UpdateModal from "./editItem/EditItem";
 
 export default class Items extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class Items extends Component {
 
     this.state = {
       data: null,
+      suppliers: null,
       userData: {},
       filter: "ACTIVE",
       redirect: false,
@@ -62,6 +64,13 @@ export default class Items extends Component {
 
       this.setState({
         userData: data
+      });
+
+      // Get suppliers data
+      axios.get(`http://localhost:8180/suppliers/all`).then(res => {
+        this.setState({
+          suppliers: res.data
+        });
       });
     } else {
       this.setState({
@@ -123,16 +132,11 @@ export default class Items extends Component {
       return <Redirect to="/" />;
     }
 
-    let i = 1; // Suppliers second id map
-
     return (
       <div id="table" className="container">
         {this.state.data != null ? (
           <div className="table-responsive">
-            <table
-              className="tabla table table-dark table-bordered table-hover"
-              border="1"
-            >
+            <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>Item code</th>
@@ -146,10 +150,11 @@ export default class Items extends Component {
                   <th>Price</th>
                   <th>Creation date</th>
                   <th>Creator</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr className="new-item">
                   <td>
                     <input
                       type="number"
@@ -190,7 +195,7 @@ export default class Items extends Component {
                       className="btn btn-primary"
                       onClick={this.formHandler}
                     >
-                      Add Item
+                      <FontAwesomeIcon icon={faPlus} />
                     </button>
                   </td>
                 </tr>
@@ -198,7 +203,7 @@ export default class Items extends Component {
                   <tr key={item.itemCode}>
                     <td>{item.itemCode}</td>
                     <td>{item.description}</td>
-                    <td>
+                    <td className="state-edit">
                       {item.state}
                       {item.state === "ACTIVE" ? (
                         <button
@@ -221,8 +226,19 @@ export default class Items extends Component {
                         data-toggle="modal"
                         data-target={"#id" + item.itemCode}
                       >
-                        See details
+                        <FontAwesomeIcon icon={faEye} />
                       </button>
+
+                      {item.state === "ACTIVE" ? (
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-edit"
+                          data-toggle="modal"
+                          data-target={"#updte" + item.itemCode}
+                        >
+                          <FontAwesomeIcon icon={faEdit} />
+                        </button>
+                      ) : null}
                     </td>
                   </tr>
                 ))}
@@ -233,12 +249,16 @@ export default class Items extends Component {
 
         {this.state.data != null ? (
           <div>
-            <InfoModal
-              counter={this.id}
+            <InfoModal data={this.state.data} formatDate={this.formatDate} />
+            <EditModal
               data={this.state.data}
-              formatDate={this.formatDate}
+              refreshTable={this.refreshTable}
             />
-            <EditModal data={this.state.data} refreshTable={this.refreshTable}/>
+            <UpdateModal
+              data={this.state.data}
+              refreshTable={this.refreshTable}
+              suppliers={this.state.suppliers}
+            />
           </div>
         ) : null}
       </div>
