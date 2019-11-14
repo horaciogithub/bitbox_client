@@ -34,6 +34,7 @@ export default class Login extends Component {
           axios
             .post(`http://localhost:8180/user/data`, {  name: username  })
             .then(res => {
+              console.log(res.data)
               sessionStorage.setItem("userData", JSON.stringify(res.data)); // User session data
               this.setState({
                 isAuthenticated: true
@@ -59,11 +60,11 @@ export default class Login extends Component {
       <div className="form-container">
         <div className="form-group">
           <div className="user-addon"></div>
-          <input className="user-input" type="text" name="username" autocomplete="off" onChange={this.inputHandler} />
+          <input className="user-input" type="text" name="username" autoComplete="off" onChange={this.inputHandler} placeholder="User" />
         </div>
         <div className="form-group">
           <div className="password-addon"></div>
-          <input className="password-input" type="password" name="password" onChange={this.inputHandler} />
+          <input className="password-input" type="password" name="password" onChange={this.inputHandler} placeholder="Password"/>
         </div>
         <button className="btn" onClick={this.formHandler}>Logearse</button>
       </div>

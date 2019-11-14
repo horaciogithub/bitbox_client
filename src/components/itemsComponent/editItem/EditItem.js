@@ -1,23 +1,58 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 export default class EditModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      stateReason: ""
+      description: '',
+      price: 0,
+      state: 'ACTIVE',
+      creator: {
+        id: JSON.parse(sessionStorage.getItem("userData")).id,
+      },
+      reducedPrice: 0,
+      startDate: '',
+      endDate: ''
+      
     };
     // this.formHandler = this.formHandler.bind();
   }
 
-  // formHandler = (itemCode, refresh) => {
-    
-  // };
+  formHandler = (itemCode, refresh) => {
+    let data = {  
+      "itemCode": itemCode,
+      "description": this.state.description,
+      "price": this.state.price,
+      "state": this.state.state,
+      "creator": this.state.creator,
+      "priceReduction": {
+        "reducedPrice": this.state.reducedPrice,
+        "startDate": this.state.startDate,
+        "endDate": this.state.endDate,
+      }
+    }
+
+    axios
+        .put(`http://localhost:8180/items/update`, data)
+        .then(res => {
+         console.log(res.status)
+         refresh()
+        });
+  };
+
+  inputHandler = (e) => {
+    this.setState({
+      [e.target.name] : e.target.value
+    })
+  }
 
   render() {
 
-
-   let Select = (<select name="">
+    console.log(this.state)
+    let Select = (<select name="supplier" onChange={ this.inputHandler }>
+                    <option value="">-</option>
                   {this.props.suppliers.map(supplier=> (
                       <option key={supplier.id} value={supplier.id}>{supplier.name + ' - ' + supplier.country}</option>
                   ))}
@@ -51,19 +86,20 @@ export default class EditModal extends Component {
             </div>
             <div className="modal-body">
               <div className="form-group">
-                <input type="text" placeholder="Description"/>
-                <input type="text" placeholder="Price"/>
+                <input type="text" name="description" placeholder="Description" onChange={ this.inputHandler }/>
+                <input type="text" name="price" placeholder="Price" onChange={ this.inputHandler }/>
               </div>
               <div className="form-group">
-                <select name="">
-                  <option value="ACTIVE">ACTIVE</option>
-                  <option value="ACTIVE">DISCONTINUED</option>
+                <select name="state" onChange={ this.inputHandler }>
+                  <option value="ACTIVE" defaultValue>ACTIVE</option>
+                  <option value="DISCONTINUED">DISCONTINUED</option>
                 </select>
-                <input type="text" placeholder="Creator"/>
+                {Select}
               </div>
               <div className="form-group">
-                {Select}
-                <input type="text" placeholder="Price reduction"/>
+                <input type="text" name="priceReduction" placeholder="Price reduction" onChange={ this.inputHandler }/>
+                <input type="text" name="startDate" placeholder="Start date" onChange={ this.inputHandler }/>
+                <input type="text" name="endDate" placeholder="End date" onChange={ this.inputHandler }/>
               </div>
             </div>
             <div className="modal-footer">
