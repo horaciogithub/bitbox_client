@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import Login from "../components/loginComponent/LoginComponent";
-import Items from "../components/itemsComponent/ItemsComponent";
+import LoginComponent from "../components/loginComponent/LoginComponent";
+import UserComponent from "../components/userComponent/UserComponent";
+import AdminComponent from "../components/adminComponent/AdminComponent";
 
 export default class App extends Component {
 
@@ -17,8 +18,9 @@ export default class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Route path="/" exact render={() => <Login authenticated= { this.state.authenticated } />} />
-        <Route path="/items" exact render={() => <Items  authenticated= { this.state.authenticated }/>} />
+        <Route path="/" exact render={() => <LoginComponent authenticated= { this.state.authenticated } />} />
+        <Route path="/user" exact render={() => <UserComponent  authenticated= { this.state.authenticated }/>} />
+        <Route path="/admin" exact render={() => <AdminComponent  authenticated= { this.state.authenticated }/>} />
       </BrowserRouter>
     );
   }

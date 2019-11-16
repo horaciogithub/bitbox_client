@@ -12,7 +12,8 @@ export default class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      isAuthenticated: false
+      isAuthenticated: false,
+      role: ""
     };
 
     this.formHandler = this.formHandler.bind();
@@ -34,10 +35,10 @@ export default class Login extends Component {
           axios
             .post(`http://localhost:8180/user/data`, {  name: username  })
             .then(res => {
-              console.log(res.data)
               sessionStorage.setItem("userData", JSON.stringify(res.data)); // User session data
               this.setState({
-                isAuthenticated: true
+                isAuthenticated: true,
+                role: res.data.role
               })
             });
         }
@@ -53,7 +54,11 @@ export default class Login extends Component {
   render() {
     
     if (this.state.isAuthenticated) {
-      return <Redirect to="/items" />;
+      if (this.state.role === 'ADMIN') {
+        return <Redirect to="/admin" />;
+      } else {
+        return <Redirect to="/user" />;
+      }
     }
 
     return (

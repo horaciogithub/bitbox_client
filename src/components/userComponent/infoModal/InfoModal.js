@@ -3,7 +3,6 @@ import React, { Component } from "react";
 export default class InfoModal extends Component {
   render() {
     let i = 1; // Suppliers second id map
-    console.log(this.props.data)
     return this.props.data.map(item => (
       <div
         key={"k1 - " + item.itemCode}
@@ -18,7 +17,7 @@ export default class InfoModal extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">
-                Item's details
+                Item { item.itemCode } details
               </h5>
               <button
                 type="button"
@@ -43,10 +42,10 @@ export default class InfoModal extends Component {
                 <div>
                   <p>Price reduction: {item.priceReduction.reducedPrice}</p>
                   <p>
-                    Start date: {this.props.formatDate(item.priceReduction.startDate)}
+                    Start date: {item.priceReduction.startDate}
                   </p>
                   <p>
-                    End date: {this.props.formatDate(item.priceReduction.endDate)}
+                    End date: {item.priceReduction.endDate}
                   </p>
                 </div>
               ) : null}
