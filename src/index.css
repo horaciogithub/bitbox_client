@@ -25,6 +25,7 @@ textarea {
   background-color: inherit !important;
   border-radius: 0 !important;
   border: 1px !important;
+  color: white !important;
   resize: none;
 }
 
@@ -62,12 +63,20 @@ button {
   cursor: pointer;
 }
 
+button.btn-secondary {
+  background-color: rgb(14, 15, 19);
+}
+
 button:focus {
   outline: none !important;
 }
 
 button:hover {
   background-color: #303f9f;
+}
+
+button.btn-secondary:hover {
+  background-color: rgb(9, 10, 12);
 }
 
 button.active {
@@ -86,6 +95,12 @@ table {
 table thead {
   background-color: #303f9f;
 }
+
+tr.admin-row,
+tr.admin-row:hover {
+  background-color: #304ffe !important;
+}
+
 
 th, td {
   /* width: 150px; */

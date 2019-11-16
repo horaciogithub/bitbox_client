@@ -74,6 +74,22 @@ export default class UsersTableComponent extends Component {
                 </td>
               </tr>
               {this.props.users.map(user => (
+                user.id === JSON.parse(sessionStorage.getItem("userData")).id ? 
+                  <tr key={user.id} className="admin-row">
+                  <td>{user.name}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.role}</td>
+                  <td></td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={e => this.props.delete(user.id)}
+                    >
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                    </button>
+                  </td>
+                </tr> :
                 <tr key={user.id}>
                   <td>{user.name}</td>
                   <td>{user.firstName}</td>
