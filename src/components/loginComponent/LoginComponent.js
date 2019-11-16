@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+
 import axios from "axios";
 
 import './LoginComponent.css';
@@ -13,7 +16,8 @@ export default class Login extends Component {
       username: "",
       password: "",
       isAuthenticated: false,
-      role: ""
+      role: "",
+      errorMessage: ''
     };
 
     this.formHandler = this.formHandler.bind();
@@ -23,6 +27,10 @@ export default class Login extends Component {
   formHandler = () => {
     let username = this.state.username;
     let pass = this.state.password;
+
+    if (this.state.username === '' || this.state.password === '') {
+      return this.setState({ errorMessage: 'You must fill the username and password'})
+    }
 
     axios.get(`http://localhost:8180/basicauth`, {
         auth: {
@@ -40,8 +48,15 @@ export default class Login extends Component {
                 isAuthenticated: true,
                 role: res.data.role
               })
-            });
+            })
+            .catch(ex=>{
+              console.log(ex)
+              this.setState({ errorMessage: 'User or password incorrect' })
+            }
+            );
         }
+      }).catch(ex=>{
+        this.setState({ errorMessage: 'User or password incorrect' })
       });
   };
 
@@ -71,7 +86,12 @@ export default class Login extends Component {
           <div className="password-addon"></div>
           <input className="password-input" type="password" name="password" onChange={this.inputHandler} placeholder="Password"/>
         </div>
-        <button className="btn" onClick={this.formHandler}>Logearse</button>
+        <button className="btn" onClick={this.formHandler}>
+          Log in <FontAwesomeIcon icon={faSignInAlt} />
+        </button>
+        {
+          this.state.errorMessage !== '' ? <p className="errorMessage">{this.state.errorMessage}</p>:null
+        }
       </div>
     );
   }

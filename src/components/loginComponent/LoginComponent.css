@@ -37,7 +37,7 @@ div.form-container .user-addon {
 div.form-container .user-input {
     background-color: inherit;
     width: 100%;
-    height: 35px;
+    height: inherit !important;
     border: none
 }
 
@@ -54,10 +54,16 @@ div.form-container .password-addon {
 div.form-container .password-input {
     background-color: inherit;
     width: 100%;
-    height: 35px;
+    height: inherit !important;
     border: none
 }
 
 div.form-container button {
     width: 60%;
+}
+
+p.errorMessage {
+    text-align: center;
+    padding: 15px 0;
+    color: #e57373;
 }

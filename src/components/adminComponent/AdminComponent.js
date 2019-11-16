@@ -22,7 +22,8 @@ export default class AdminComponent extends Component {
       name: "",
       firstName: "",
       lastName: "",
-      role: ""
+      password: "",
+      role: "USER"
     };
 
     this.userCreationHandler = this.userCreationHandler.bind();
@@ -70,17 +71,48 @@ export default class AdminComponent extends Component {
   }
 
   inputHandler = e => {
+    this.resetEmptyInputHandler();
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
+  emptyInputHandler = (id) => {
+    id.classList.add('empty-form');
+    id.placeholder="Empty field"
+  }
+
+  resetEmptyInputHandler = (id) => {
+    let inputName = document.getElementById('name');
+    let inputPassword = document.getElementById('password');
+    let inputFirstName = document.getElementById('firstName');
+    
+    if(inputName.className === 'empty-form') {
+      inputName.classList.remove('empty-form');
+      inputName.placeholder=""
+    }
+
+    if(inputPassword.className === 'empty-form') {
+      inputPassword.classList.remove('empty-form')
+      inputPassword.placeholder=""
+    }
+
+    if(inputFirstName.className === 'empty-form') {
+      inputFirstName.classList.remove('empty-form')
+      inputFirstName.placeholder=""
+    }
+  }
+
   userCreationHandler = () => {
+
+    this.state.name === '' ? this.emptyInputHandler(document.getElementById('name')) : document.getElementById('name').blur();
+    this.state.password === '' ? this.emptyInputHandler(document.getElementById('password')) : document.getElementById('password').blur();
+    this.state.firstName === '' ? this.emptyInputHandler(document.getElementById('firstName')) : document.getElementById('firstName').blur()
+
     if (
       this.state.name &&
       this.state.password &&
-      this.state.firstName &&
-      this.state.role
+      this.state.firstName
     ) {
       let data = {
         name: this.state.name,
@@ -122,7 +154,6 @@ export default class AdminComponent extends Component {
     document.getElementById("password").value = "";
     document.getElementById("firstName").value = "";
     document.getElementById("lastName").value = "";
-    document.getElementById("role").value = "";
   };
 
   changeState = () => {

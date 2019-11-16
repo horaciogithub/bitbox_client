@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default class ItemsTableComponent extends Component {
   render() {
@@ -21,9 +21,10 @@ export default class ItemsTableComponent extends Component {
                 </th>
                 <th>Price</th>
                 <th>Creator</th>
-                <th>Reduced price</th>
+                <th>R. price</th>
                 <th>Start date</th>
                 <th>End date</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -32,11 +33,11 @@ export default class ItemsTableComponent extends Component {
                   <td>{item.itemCode}</td>
                   <td>{item.description}</td>
                   <td>{item.state}</td>
-                  <td>{item.price}</td>
+                  <td>{item.price} €</td>
                   <td>{item.creator.name}</td>
                   <td>
                     {item.priceReduction !== null
-                      ? item.priceReduction.reducedPrice
+                      ? item.priceReduction.reducedPrice + ' €'
                       : 0}
                   </td>
                   <td>
@@ -54,7 +55,7 @@ export default class ItemsTableComponent extends Component {
                       className="btn btn-danger"
                       onClick={e => this.props.delete(item.itemCode)}
                     >
-                      <FontAwesomeIcon icon={faTrash} />
+                      <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                   </td>
                 </tr>
