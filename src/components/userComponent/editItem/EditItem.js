@@ -37,7 +37,6 @@ export default class EditModal extends Component {
     axios
         .put(`http://localhost:8180/items/update`, data)
         .then(res => {
-         console.log(res.status)
          refresh()
         });
   };
@@ -50,7 +49,6 @@ export default class EditModal extends Component {
 
   render() {
 
-    console.log(this.state)
     let Select = (<select name="supplier" onChange={ this.inputHandler }>
                     <option value="">-</option>
                   {this.props.suppliers.map(supplier=> (

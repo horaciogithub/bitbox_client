@@ -2,16 +2,18 @@ import React, { Component, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import "./AdminComponent.css";
 
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
+import UsersTableComponent from "./usersTableComponent/UsersTableComponent";
+import ItemsTableComponent from "./itemsTableComponent/ItemsTableComponent";
 
 export default class AdminComponent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      state: 'ACTIVE',
       items: null,
       users: null,
       userData: {},
@@ -63,7 +65,7 @@ export default class AdminComponent extends Component {
       });
     }
 
-    // this.refreshItemsTable();
+    this.refreshItemsTable();
     this.refreshUsersTable();
   }
 
@@ -96,8 +98,14 @@ export default class AdminComponent extends Component {
   };
 
   deleteUserHandler = id => {
-    axios.delete(`http://localhost:8180/user/delete?id=`+id).then(res => {
+    axios.delete(`http://localhost:8180/user/delete?id=` + id).then(res => {
       this.refreshUsersTable();
+    });
+  };
+
+  deleteItemHandler = id => {
+    axios.delete(`http://localhost:8180/items/delete?id=` + id).then(res => {
+      this.refreshItemsTable();
     });
   };
 
@@ -117,6 +125,13 @@ export default class AdminComponent extends Component {
     document.getElementById("role").value = "";
   };
 
+  changeState = () => {
+    this.state.state === "ACTIVE"
+      ? this.setState({ state: "DISCONTINUED" })
+      : this.setState({ state: "ACTIVE" });
+    this.refreshItemsTable();
+  };
+
   logout = () => {
     sessionStorage.setItem("userData", "");
     sessionStorage.clear();
@@ -127,7 +142,6 @@ export default class AdminComponent extends Component {
   };
 
   render() {
-    console.log(this.state);
     if (this.state.users !== null) {
       if (this.state.redirect || this.state.userData.role !== "ADMIN") {
         return <Redirect to="/" />;
@@ -136,90 +150,62 @@ export default class AdminComponent extends Component {
         <Fragment>
           <HeaderComponent data={this.state.userData} click={this.logout} />
 
-          <div id="table" className="container">
-            <div className="table-responsive">
-              <table className="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Role</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="new-item">
-                    <td>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        onChange={this.inputHandler}
-                        required
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        onChange={this.inputHandler}
-                        required
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        onChange={this.inputHandler}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        id="role"
-                        name="role"
-                        onChange={this.inputHandler}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={this.inputHandler}
-                      />
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-primary"
-                        onClick={this.userCreationHandler}
-                      >
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
-                    </td>
-                  </tr>
-                  {this.state.users.map(user => (
-                    <tr key={user.id}>
-                      <td>{user.name}</td>
-                      <td>{user.firstName}</td>
-                      <td>{user.lastName}</td>
-                      <td>{user.role}</td>
-                      <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={(e) => this.deleteUserHandler(user.id)}
-                        >
-                          delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="container panel-administrator">
+            <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  id="home-tab"
+                  data-toggle="tab"
+                  href="#users"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
+                >
+                  Users
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  id="profile-tab"
+                  data-toggle="tab"
+                  href="#profile"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                >
+                  Items
+                </a>
+              </li>
+            </ul>
+
+            <div className="tab-content" id="myTabContent">
+              <div
+                className="tab-pane fade show active"
+                id="users"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <UsersTableComponent
+                  users={this.state.users}
+                  change={this.inputHandler}
+                  click={this.userCreationHandler}
+                  delete={this.deleteUserHandler}
+                />
+              </div>
+              <div
+                className="tab-pane fade"
+                id="profile"
+                role="tabpanel"
+                aria-labelledby="profile-tab"
+              >
+              <ItemsTableComponent
+                  items={this.state.items}
+                  changeState={this.changeState}
+                  delete={this.deleteItemHandler}
+                />
+              </div>
             </div>
           </div>
         </Fragment>

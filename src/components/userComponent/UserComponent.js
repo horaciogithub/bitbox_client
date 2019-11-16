@@ -79,7 +79,6 @@ export default class Items extends Component {
 
   inputHandler = e => {
     if (e.target.name === "itemCode" && this.state.itemCode.length >= 19) {
-      console.log(this.state.itemCode.length);
       document.getElementById("itemCode").value = this.state.itemCode;
     } else {
       this.setState({
