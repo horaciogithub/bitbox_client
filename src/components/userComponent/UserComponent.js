@@ -22,7 +22,7 @@ export default class Items extends Component {
       userData: {},
       filter: "ACTIVE",
       redirect: false,
-      itemCode: 0,
+      itemCode: "",
       description: "",
       state: "ACTIVE",
       price: null,
@@ -78,6 +78,9 @@ export default class Items extends Component {
   }
 
   inputHandler = e => {
+
+    this.resetEmptyInputHandler();
+
     if (e.target.name === "itemCode" && this.state.itemCode.length >= 19) {
       document.getElementById("itemCode").value = this.state.itemCode;
     } else {
@@ -88,6 +91,10 @@ export default class Items extends Component {
   };
 
   formHandler = () => {
+
+    this.state.itemCode === '' ? this.emptyInputHandler(document.getElementById('itemCode')) : document.getElementById('itemCode').blur();
+    this.state.description === '' ? this.emptyInputHandler(document.getElementById('description')) : document.getElementById('description').blur();
+
     if (this.state.itemCode.length > 0 && this.state.description.length > 0) {
       axios
         .post(`http://localhost:8180/items/create`, {
@@ -112,6 +119,26 @@ export default class Items extends Component {
       : this.setState({ state: "ACTIVE" });
     this.refreshTable();
   };
+
+  emptyInputHandler = (id) => {
+    id.classList.add('empty-form');
+    id.placeholder="Required field"
+  }
+
+  resetEmptyInputHandler = (id) => {
+    let inputItemCode = document.getElementById('itemCode');
+    let inputDescription = document.getElementById('description');
+    
+    if(inputItemCode.className === 'empty-form') {
+      inputItemCode.classList.remove('empty-form');
+      inputItemCode.placeholder=""
+    }
+
+    if(inputDescription.className === 'empty-form') {
+      inputDescription.classList.remove('empty-form')
+      inputDescription.placeholder=""
+    }
+  }
 
   logout = () => {
     sessionStorage.setItem("userData", "");

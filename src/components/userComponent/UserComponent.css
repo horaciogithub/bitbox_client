@@ -43,3 +43,19 @@
 .btn-edit {
     margin-left: 5px;
 }
+
+div.reducedPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(36, 35, 35);
+}
+
+.price-reduction {
+    font-size: 12px;
+}
+
+.price-reduction span {
+    font-weight: bold;
+}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Items from "../UserComponent";
 
 export default class InfoModal extends Component {
   render() {
@@ -17,7 +18,7 @@ export default class InfoModal extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">
-                Item { item.itemCode } details
+                Item {item.itemCode} details
               </h5>
               <button
                 type="button"
@@ -29,23 +30,40 @@ export default class InfoModal extends Component {
               </button>
             </div>
             <div className="modal-body">
-              {item.suppliers.map(supplier =>
-                supplier.id !== null ? (
-                  <div key={ i++ }>
-                    <p>Supplier name: {supplier.name}</p>
-                    <p>Supplier country: {supplier.country}</p>
-                    <hr />
-                  </div>
-                ) : null
-              )}
+              {item.suppliers.length ? (
+                <div className="table-responsive">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Supplier</th>
+                        <th>Country</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {item.suppliers.map(supplier => (
+                        <tr key={i++}>
+                          <td>{supplier !== null ? supplier.name : null}</td>
+                          <td>{supplier !== null ? supplier.country : null}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : null}
+
               {item.priceReduction !== null ? (
-                <div>
-                  <p>Price reduction: {item.priceReduction.reducedPrice}</p>
-                  <p>
-                    Start date: {item.priceReduction.startDate}
+                <div className="reducedPrice">
+                  <p className="price-reduction">
+                    <span>Price reducion: </span>
+                    {item.priceReduction.reducedPrice}
                   </p>
-                  <p>
-                    End date: {item.priceReduction.endDate}
+
+                  <p className="price-reduction">
+                    <span>Start date: </span> {item.priceReduction.startDate}
+                  </p>
+
+                  <p className="price-reduction">
+                    <span>End date: </span> {item.priceReduction.endDate}
                   </p>
                 </div>
               ) : null}

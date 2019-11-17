@@ -15,10 +15,28 @@ export default class EditModal extends Component {
   }
 
   reasonHandler = e => {
+    this.resetEmptyInputHandler();
     this.setState({ stateReason: e.target.value });
   };
 
+  emptyInputHandler = (id) => {
+    id.classList.add('empty-form');
+    id.placeholder="Required field"
+  }
+
+  resetEmptyInputHandler = (id) => {
+    let inputStateReason = document.getElementById('stateReason');
+
+    if(inputStateReason.className === 'empty-form') {
+      inputStateReason.classList.remove('empty-form')
+      inputStateReason.placeholder=""
+    }
+  }
+
   formHandler = (itemCode, refresh) => {
+
+    this.state.stateReason === '' ? this.emptyInputHandler(document.getElementById('stateReason')) : document.getElementById('description').blur();
+
     if (this.state.stateReason.length > 0) {
       axios
         .put(`http://localhost:8180/items/deactivate`, {
@@ -61,6 +79,7 @@ export default class EditModal extends Component {
             <div className="modal-body">
               <div className="form-group">
                 <textarea
+                  id="stateReason"
                   className="form-control"
                   name="stateReason"
                   cols="30"

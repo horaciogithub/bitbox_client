@@ -79,7 +79,7 @@ export default class AdminComponent extends Component {
 
   emptyInputHandler = (id) => {
     id.classList.add('empty-form');
-    id.placeholder="Empty field"
+    id.placeholder="Required field"
   }
 
   resetEmptyInputHandler = (id) => {

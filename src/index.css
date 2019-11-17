@@ -41,11 +41,11 @@ textarea:focus {
   color: white;
 }
 
-input.empty-form {
+.empty-form {
   border-color: #e57373;
 }
 
-input.empty-form::placeholder {
+.empty-form::placeholder {
   color: #e57373 !important;
 }
 
@@ -106,6 +106,7 @@ th, td {
   /* width: 150px; */
   word-wrap: break-word;
   border: none !important;
+  vertical-align: middle !important
 }
 
 th {

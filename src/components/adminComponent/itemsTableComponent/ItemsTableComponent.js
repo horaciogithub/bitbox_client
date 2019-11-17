@@ -33,12 +33,12 @@ export default class ItemsTableComponent extends Component {
                   <td>{item.itemCode}</td>
                   <td>{item.description}</td>
                   <td>{item.state}</td>
-                  <td>{item.price} €</td>
+                  <td>{item.price ? item.price + ' €' : null }</td>
                   <td>{item.creator.name}</td>
                   <td>
                     {item.priceReduction !== null
                       ? item.priceReduction.reducedPrice + ' €'
-                      : 0}
+                      : null}
                   </td>
                   <td>
                     {item.priceReduction !== null

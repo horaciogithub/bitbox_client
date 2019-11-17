@@ -12,6 +12,7 @@ export default class EditModal extends Component {
       creator: {
         id: JSON.parse(sessionStorage.getItem("userData")).id,
       },
+      supplier: '',
       reducedPrice: 0,
       startDate: '',
       endDate: ''
@@ -27,6 +28,7 @@ export default class EditModal extends Component {
       "price": this.state.price,
       "state": this.state.state,
       "creator": this.state.creator,
+      "suppliers": { "id": this.state.supplier },
       "priceReduction": {
         "reducedPrice": this.state.reducedPrice,
         "startDate": this.state.startDate,
