@@ -190,6 +190,7 @@ export default class Items extends Component {
                           name="itemCode"
                           onChange={this.inputHandler}
                           min="0"
+                          autoComplete="off"
                         />
                       </td>
                       <td>
@@ -198,6 +199,7 @@ export default class Items extends Component {
                           id="description"
                           name="description"
                           onChange={this.inputHandler}
+                          autoComplete="off"
                         />
                       </td>
                       <td>
@@ -214,6 +216,7 @@ export default class Items extends Component {
                           id="price"
                           name="price"
                           onChange={this.inputHandler}
+                          autoComplete="off"
                         />
                       </td>
                       <td></td>

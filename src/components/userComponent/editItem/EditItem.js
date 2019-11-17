@@ -7,8 +7,7 @@ export default class EditModal extends Component {
 
     this.state = {
       description: '',
-      price: 0,
-      state: 'ACTIVE',
+      price: null,
       creator: {
         id: JSON.parse(sessionStorage.getItem("userData")).id,
       },
@@ -26,7 +25,6 @@ export default class EditModal extends Component {
       "itemCode": itemCode,
       "description": this.state.description,
       "price": this.state.price,
-      "state": this.state.state,
       "creator": this.state.creator,
       "suppliers": { "id": this.state.supplier },
       "priceReduction": {
@@ -52,7 +50,7 @@ export default class EditModal extends Component {
   render() {
 
     let Select = (<select name="supplier" onChange={ this.inputHandler }>
-                    <option value="">-</option>
+                    <option value="">---</option>
                   {this.props.suppliers.map(supplier=> (
                       <option key={supplier.id} value={supplier.id}>{supplier.name + ' - ' + supplier.country}</option>
                   ))}
@@ -86,20 +84,16 @@ export default class EditModal extends Component {
             </div>
             <div className="modal-body">
               <div className="form-group">
-                <input type="text" name="description" placeholder="Description" onChange={ this.inputHandler }/>
-                <input type="text" name="price" placeholder="Price" onChange={ this.inputHandler }/>
+                <input type="text" name="description" placeholder="Description" onChange={ this.inputHandler } autoComplete="off"/>
+                <input type="number" name="price" placeholder="Price" onChange={ this.inputHandler } step="0.01"  autoComplete="off"/>
               </div>
               <div className="form-group">
-                <select name="state" onChange={ this.inputHandler }>
-                  <option value="ACTIVE" defaultValue>ACTIVE</option>
-                  <option value="DISCONTINUED">DISCONTINUED</option>
-                </select>
                 {Select}
+                <input type="number" name="priceReduction" placeholder="Price reduction" onChange={ this.inputHandler } step="0.01"  autoComplete="off"/>
               </div>
               <div className="form-group">
-                <input type="text" name="priceReduction" placeholder="Price reduction" onChange={ this.inputHandler }/>
-                <input type="text" name="startDate" placeholder="Start date" onChange={ this.inputHandler }/>
-                <input type="text" name="endDate" placeholder="End date" onChange={ this.inputHandler }/>
+                <input type="text" name="startDate" placeholder="Start date" onChange={ this.inputHandler } autoComplete="off"/>
+                <input type="text" name="endDate" placeholder="End date" onChange={ this.inputHandler } autoComplete="off"/>
               </div>
             </div>
             <div className="modal-footer">

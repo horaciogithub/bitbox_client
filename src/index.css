@@ -103,8 +103,8 @@ tr.admin-row:hover {
 
 
 th, td {
-  /* width: 150px; */
-  word-wrap: break-word;
+  width: 120px;
+  /* word-wrap: break-word; */
   border: none !important;
   vertical-align: middle !important
 }

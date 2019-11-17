@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Items from "../UserComponent";
+
+import "./InfoModal.css";
 
 export default class InfoModal extends Component {
   render() {
@@ -31,31 +32,35 @@ export default class InfoModal extends Component {
             </div>
             <div className="modal-body">
               {item.suppliers.length ? (
-                <div className="table-responsive">
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Supplier</th>
-                        <th>Country</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {item.suppliers.map(supplier => (
-                        <tr key={i++}>
-                          <td>{supplier !== null ? supplier.name : null}</td>
-                          <td>{supplier !== null ? supplier.country : null}</td>
+                <div className="suppliers-table container">
+                  <div className="table-responsive">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Supplier</th>
+                          <th>Country</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {item.suppliers.map(supplier => (
+                          <tr key={i++}>
+                            <td>{supplier !== null ? supplier.name : null}</td>
+                            <td>
+                              {supplier !== null ? supplier.country : null}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              ) : null}
+              ) : <p>The item does not have suppliers information</p>}
 
               {item.priceReduction !== null ? (
                 <div className="reducedPrice">
                   <p className="price-reduction">
                     <span>Price reducion: </span>
-                    {item.priceReduction.reducedPrice}
+                    {item.priceReduction.reducedPrice} €
                   </p>
 
                   <p className="price-reduction">

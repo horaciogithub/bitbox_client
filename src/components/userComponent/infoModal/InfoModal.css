@@ -1,0 +1,36 @@
+.suppliers-table {
+    height: 200px;
+    margin-top: 50px;
+    padding: 0;
+    overflow-y: scroll;
+    background-color: rgb(35, 37, 46);
+    box-shadow: 0 0 5px black;
+}
+
+.suppliers-table::-webkit-scrollbar {
+    width: 10px;
+}
+
+.suppliers-table::-webkit-scrollbar-thumb {
+    background: #303f9f; 
+}
+
+div.reducedPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgb(36, 35, 35);
+}
+
+.price-reduction {
+    display: list-item;
+    margin: auto;
+    font-size: 12px;
+}
+
+.price-reduction span {
+    font-weight: bold;
+}

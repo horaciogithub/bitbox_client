@@ -30,6 +30,7 @@ export default class UsersTableComponent extends Component {
                     name="name"
                     onChange={this.props.change}
                     required
+                     autoComplete="off"
                   />
                 </td>
                 <td>
@@ -39,6 +40,7 @@ export default class UsersTableComponent extends Component {
                     name="firstName"
                     onChange={this.props.change}
                     required
+                     autoComplete="off"
                   />
                 </td>
                 <td>
@@ -47,6 +49,7 @@ export default class UsersTableComponent extends Component {
                     id="lastName"
                     name="lastName"
                     onChange={this.props.change}
+                     autoComplete="off"
                   />
                 </td>
                 <td>
@@ -62,6 +65,7 @@ export default class UsersTableComponent extends Component {
                     name="password"
                     placeholder="Password"
                     onChange={this.props.change}
+                     autoComplete="off"
                   />
                 </td>
                 <td>
