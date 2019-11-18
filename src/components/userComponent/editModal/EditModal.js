@@ -9,9 +9,6 @@ export default class EditModal extends Component {
     this.state = {
       stateReason: ""
     };
-
-    this.reasonHandler = this.reasonHandler.bind();
-    this.formHandler = this.formHandler.bind();
   }
 
   reasonHandler = e => {
@@ -44,16 +41,23 @@ export default class EditModal extends Component {
           stateReason: this.state.stateReason
         })
         .then(res => {
-         console.log(res.status)
          refresh()
         });
+
+      // When modal dissapears backdrops must dissapear too
+      let backDrops = document.getElementsByClassName("modal-backdrop")
+
+      for(let i = 0; i < backDrops.length; i++) {
+        backDrops[i].style.display='none'
+      }
+      
     }
   };
 
   render() {
     return this.props.data.map(item => (
       <div
-        key={"k1 - " + item.itemCode}
+        key={"e1 - " + item.itemCode}
         className="modal fade"
         id={"edit" + item.itemCode}
         tabIndex="-1"
@@ -64,7 +68,7 @@ export default class EditModal extends Component {
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">
+              <h5 className="modal-title">
                 {"Deactivate item " + item.itemCode}
               </h5>
               <button
@@ -97,7 +101,9 @@ export default class EditModal extends Component {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={(e) => this.formHandler(item.itemCode, this.props.refreshTable)}>
+              <button type="button" className="btn btn-primary"
+               onClick={(e) => this.formHandler(item.itemCode, this.props.refreshTable)}
+               >
                 Save changes
               </button>
             </div>

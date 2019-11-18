@@ -4,6 +4,8 @@ import { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 
 import DatePicker from "react-datepicker";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./EditItem.css";
@@ -20,51 +22,68 @@ export default class EditModal extends Component {
         id: JSON.parse(sessionStorage.getItem("userData")).id
       },
       supplier: "",
-      reducedPrice: 0,
+      reducedPrice: null,
       startDate: new Date(),
-      endDate: new Date()
+      endDate: new Date(),
+      errorMessage: ""
     };
-    // this.formHandler = this.formHandler.bind();
   }
 
   formattedDate = date => {
-    return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    return (
+      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
+    );
   };
 
   isCorrectDate = (startDate, endDate) => {
-    if(startDate >= endDate) {
+    if (startDate >= endDate) {
       return false;
     } else {
       return true;
     }
-  }
+  };
 
   formHandler = (itemCode, refresh) => {
+    let data = {};
 
-    let startDate;
-    let endDate;
-
-    if(this.isCorrectDate(this.state.startDate, this.state.endDate)) {
-      startDate = this.formattedDate(this.state.startDate);
-      endDate = this.formattedDate(this.state.endDate);
+    if (
+      this.state.reducedPrice !== null &&
+      this.isCorrectDate(this.state.startDate, this.state.endDate)
+    ) {
+      data = {
+        itemCode: itemCode,
+        description: this.state.description,
+        price: this.state.price,
+        creator: this.state.creator,
+        suppliers: { id: this.state.supplier },
+        priceReduction: {
+          reducedPrice: this.state.reducedPrice,
+          startDate: this.formattedDate(this.state.startDate),
+          endDate: this.formattedDate(this.state.endDate)
+        }
+      };
+      this.setState({
+        errorMessage: ""
+      });
     } else {
-      startDate = '';
-      endDate = ''
-      alert('Start date and End date have not be added because end date can not be before start date')
+      data = {
+        itemCode: itemCode,
+        description: this.state.description,
+        price: this.state.price,
+        creator: this.state.creator,
+        suppliers: { id: this.state.supplier },
+        priceReduction: {
+          reducedPrice: this.state.reducedPrice,
+          startDate: "",
+          endDate: ""
+        }
+      };
+  
+      this.setState({
+        errorMessage:
+          "The price reduction has not been inserted owing to the fact that the end date can not be earlier than the start date"
+      });
     }
-
-    let data = {
-      itemCode: itemCode,
-      description: this.state.description,
-      price: this.state.price,
-      creator: this.state.creator,
-      suppliers: { id: this.state.supplier },
-      priceReduction: {
-        reducedPrice: this.state.reducedPrice,
-        startDate: startDate,
-        endDate: endDate
-      }
-    };
 
     axios.put(`http://localhost:8180/items/update`, data).then(res => {
       refresh();
@@ -148,7 +167,7 @@ export default class EditModal extends Component {
                 {Select}
                 <input
                   type="number"
-                  name="priceReduction"
+                  name="reducedPrice"
                   placeholder="Price reduction"
                   onChange={this.inputHandler}
                   step="0.01"
@@ -174,6 +193,14 @@ export default class EditModal extends Component {
                     dateFormat="dd-MM-yyyy"
                   />
                 </div>
+              </div>
+              <div className="message-container">
+                {this.state.errorMessage !== "" ? (
+                  <p className="error-message">
+                    <FontAwesomeIcon icon={faExclamationCircle} />{" "}
+                    {this.state.errorMessage}
+                  </p>
+                ) : null}
               </div>
             </div>
             <div className="modal-footer">

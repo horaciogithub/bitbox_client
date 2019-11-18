@@ -47,3 +47,14 @@
 .calendar .react-datepicker__day:hover {
     color: black;
 }
+
+.message-container {
+    width: 100%;
+    min-height: 40px;
+}
+
+p.error-message {
+    font-size: 13px;
+    color: #e57373;
+    margin: 0;
+  }

@@ -6,7 +6,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 export default class ItemsTableComponent extends Component {
   render() {
     return this.props.items !== null ? (
-      <div id="table" className="container">
+      <div className="table-data container">
         <div className="table-responsive">
           <table className="table table-striped table-hover">
             <thead>

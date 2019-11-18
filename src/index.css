@@ -24,7 +24,7 @@ input, select {
 textarea {
   background-color: inherit !important;
   border-radius: 0 !important;
-  border: 1px !important;
+  border: 1px solid white !important;
   color: white !important;
   resize: none;
 }

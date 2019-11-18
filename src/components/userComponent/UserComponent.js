@@ -28,11 +28,13 @@ export default class Items extends Component {
       price: null,
       creator: null
     };
+    this.changeState = this.changeState.bind();
   }
 
   refreshTable = () => {
+    
     axios
-      .get(`http://localhost:8180/items/all?state=` + this.state.state)
+      .get(`http://localhost:8180/items/all?state=` + this.state.filter)
       .then(res => {
         this.setState({
           data: res.data
@@ -78,7 +80,6 @@ export default class Items extends Component {
   }
 
   inputHandler = e => {
-
     this.resetEmptyInputHandler();
 
     if (e.target.name === "itemCode" && this.state.itemCode.length >= 19) {
@@ -91,9 +92,12 @@ export default class Items extends Component {
   };
 
   formHandler = () => {
-
-    this.state.itemCode === '' ? this.emptyInputHandler(document.getElementById('itemCode')) : document.getElementById('itemCode').blur();
-    this.state.description === '' ? this.emptyInputHandler(document.getElementById('description')) : document.getElementById('description').blur();
+    this.state.itemCode === ""
+      ? this.emptyInputHandler(document.getElementById("itemCode"))
+      : document.getElementById("itemCode").blur();
+    this.state.description === ""
+      ? this.emptyInputHandler(document.getElementById("description"))
+      : document.getElementById("description").blur();
 
     if (this.state.itemCode.length > 0 && this.state.description.length > 0) {
       axios
@@ -114,31 +118,44 @@ export default class Items extends Component {
   };
 
   changeState = () => {
-    this.state.state === "ACTIVE"
-      ? this.setState({ state: "DISCONTINUED" })
-      : this.setState({ state: "ACTIVE" });
-    this.refreshTable();
+    if (this.state.filter === "ACTIVE") {
+      this.setState({ filter: "DISCONTINUED" });
+      axios
+        .get(`http://localhost:8180/items/all?state=DISCONTINUED`)
+        .then(res => {
+          this.setState({
+            data: res.data
+          });
+        });
+    } else {
+      this.setState({ filter: "ACTIVE" });
+      axios.get(`http://localhost:8180/items/all?state=ACTIVE`).then(res => {
+        this.setState({
+          data: res.data
+        });
+      });
+    }
   };
 
-  emptyInputHandler = (id) => {
-    id.classList.add('empty-form');
-    id.placeholder="Required field"
-  }
+  emptyInputHandler = id => {
+    id.classList.add("empty-form");
+    id.placeholder = "Required field";
+  };
 
-  resetEmptyInputHandler = (id) => {
-    let inputItemCode = document.getElementById('itemCode');
-    let inputDescription = document.getElementById('description');
-    
-    if(inputItemCode.className === 'empty-form') {
-      inputItemCode.classList.remove('empty-form');
-      inputItemCode.placeholder=""
+  resetEmptyInputHandler = id => {
+    let inputItemCode = document.getElementById("itemCode");
+    let inputDescription = document.getElementById("description");
+
+    if (inputItemCode.className === "empty-form") {
+      inputItemCode.classList.remove("empty-form");
+      inputItemCode.placeholder = "";
     }
 
-    if(inputDescription.className === 'empty-form') {
-      inputDescription.classList.remove('empty-form')
-      inputDescription.placeholder=""
+    if (inputDescription.className === "empty-form") {
+      inputDescription.classList.remove("empty-form");
+      inputDescription.placeholder = "";
     }
-  }
+  };
 
   logout = () => {
     sessionStorage.setItem("userData", "");
@@ -150,9 +167,8 @@ export default class Items extends Component {
   };
 
   render() {
-    
-    if (this.state.data !== null) {
 
+    if (this.state.data !== null) {
       if (this.state.redirect || this.state.userData.role !== "USER") {
         return <Redirect to="/" />;
       }
@@ -161,7 +177,7 @@ export default class Items extends Component {
         <Fragment>
           <HeaderComponent data={this.state.userData} click={this.logout} />
 
-          <div id="table" className="container">
+          <div className="table-data container">
             {this.state.data != null ? (
               <div className="table-responsive">
                 <table className="table table-striped table-hover">

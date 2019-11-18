@@ -1,15 +1,21 @@
 
 div.form-container {
     position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	width: 25%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 70%;
     height: 235px;
     margin: auto;
     padding: 20px;
     box-shadow: 0 0 5px rgb(32, 32, 32);
+}
+
+@media only screen and (min-width: 480px) {
+    div.form-container {
+        width: 25%;
+    }
 }
 
 div.form-container button {
@@ -66,4 +72,5 @@ p.errorMessage {
     text-align: center;
     padding: 15px 0;
     color: #e57373;
+    font-size: 13px;
 }

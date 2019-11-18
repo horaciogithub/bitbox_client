@@ -1,36 +1,58 @@
 .suppliers-table {
-    height: 200px;
-    margin-top: 50px;
-    padding: 0;
-    overflow-y: scroll;
-    background-color: rgb(35, 37, 46);
-    box-shadow: 0 0 5px black;
+  height: 200px;
+  margin-top: 50px;
+  padding: 0;
+  overflow-y: scroll;
+  background-color: rgb(35, 37, 46);
+  box-shadow: 0 0 5px black;
 }
 
 .suppliers-table::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 .suppliers-table::-webkit-scrollbar-thumb {
-    background: #303f9f; 
+  background: #303f9f;
 }
 
 div.reducedPrice {
-    display: flex;
+  background-color: rgb(36, 35, 35);
+  margin-top: 20px;
+}
+
+div.reducedPrice div {
+  width: 40%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+@media only screen and (min-width: 480px) {
+  div.reducedPrice div {
+    width: 100%;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: rgb(36, 35, 35);
+  }
 }
 
 .price-reduction {
-    display: list-item;
-    margin: auto;
-    font-size: 12px;
+  display: list-item;
+  margin-top: 0;
+  font-size: 12px;
+  text-align: left;
+}
+
+.price-reduction:last-child {
+    margin-bottom: 0;
+  }
+
+@media only screen and (min-width: 480px) {
+  .price-reduction {
+    margin-top: 10px;
+  }
 }
 
 .price-reduction span {
-    font-weight: bold;
+  font-weight: bold;
 }

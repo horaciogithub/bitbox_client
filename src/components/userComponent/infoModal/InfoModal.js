@@ -54,22 +54,26 @@ export default class InfoModal extends Component {
                     </table>
                   </div>
                 </div>
-              ) : <p>The item does not have suppliers information</p>}
+              ) : (
+                <p>The item does not have suppliers information</p>
+              )}
 
               {item.priceReduction !== null ? (
                 <div className="reducedPrice">
-                  <p className="price-reduction">
-                    <span>Price reducion: </span>
-                    {item.priceReduction.reducedPrice} €
-                  </p>
+                  <div>
+                    <p className="price-reduction">
+                      <span>Price reducion: </span>
+                      {item.priceReduction.reducedPrice} €
+                    </p>
 
-                  <p className="price-reduction">
-                    <span>Start date: </span> {item.priceReduction.startDate}
-                  </p>
+                    <p className="price-reduction">
+                      <span>Start date: </span> {item.priceReduction.startDate}
+                    </p>
 
-                  <p className="price-reduction">
-                    <span>End date: </span> {item.priceReduction.endDate}
-                  </p>
+                    <p className="price-reduction">
+                      <span>End date: </span> {item.priceReduction.endDate}
+                    </p>
+                  </div>
                 </div>
               ) : null}
             </div>
