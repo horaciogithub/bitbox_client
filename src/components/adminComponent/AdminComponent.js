@@ -158,9 +158,8 @@ export default class AdminComponent extends Component {
 
   changeState = () => {
     this.state.state === "ACTIVE"
-      ? this.setState({ state: "DISCONTINUED" })
-      : this.setState({ state: "ACTIVE" });
-    this.refreshItemsTable();
+      ? this.setState({ state: "DISCONTINUED" }, () => { this.refreshItemsTable() })
+      : this.setState({ state: "ACTIVE" }, () => { this.refreshItemsTable() })      
   };
 
   logout = () => {

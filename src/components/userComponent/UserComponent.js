@@ -118,23 +118,9 @@ export default class Items extends Component {
   };
 
   changeState = () => {
-    if (this.state.filter === "ACTIVE") {
-      this.setState({ filter: "DISCONTINUED" });
-      axios
-        .get(`http://localhost:8180/items/all?state=DISCONTINUED`)
-        .then(res => {
-          this.setState({
-            data: res.data
-          });
-        });
-    } else {
-      this.setState({ filter: "ACTIVE" });
-      axios.get(`http://localhost:8180/items/all?state=ACTIVE`).then(res => {
-        this.setState({
-          data: res.data
-        });
-      });
-    }
+    this.state.filter === "ACTIVE"
+      ? this.setState({ filter: "DISCONTINUED" }, () => { this.refreshTable() })
+      : this.setState({ filter: "ACTIVE" }, () => { this.refreshTable() })      
   };
 
   emptyInputHandler = id => {
